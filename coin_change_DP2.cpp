@@ -2,32 +2,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int coin_change(vector<int>& coins, int amt) 
+int coin_change(vector<int> &coins, int amt)
 {
-   vector<vector<int>> dp(coins.size(), vector<int>(amt+1,0));
-   
-   for(int i = 0; i < coins.size(); i++) 
+   vector<vector<int>> dp(coins.size(), vector<int>(amt + 1, 0));
+
+   for (int i = 0; i < coins.size(); i++)
    {
-       dp[i][0]=0;
-       for(int j = 1; j <= amt; j++)
-       {
-          if(i==0 && j<coins[i])
-          {
-             dp[i][j]=INT_MAX;
-          }
-          if(i==0)
-          {
-             dp[i][j]=1+dp[0][j-coins[0]];
-          }
-          else if(j<coins[i])
-          {
-             dp[i][j] = dp[i-1][j];
-          }
-          else
-          {
-             dp[i][j] = min(dp[i-1][j],1+dp[i][j-coins[i]]);
-          }
-       }
+      dp[i][0] = 0;
+      for (int j = 1; j <= amt; j++)
+      {
+         if (i == 0 && j < coins[i])
+         {
+            dp[i][j] = INT_MAX;
+         }
+         if (i == 0)
+         {
+            dp[i][j] = 1 + dp[0][j - coins[0]];
+         }
+         else if (j < coins[i])
+         {
+            dp[i][j] = dp[i - 1][j];
+         }
+         else
+         {
+            dp[i][j] = min(dp[i - 1][j], 1 + dp[i][j - coins[i]]);
+         }
+      }
    }
    /*for(int i=0;i<coins.size();i++)
    {
@@ -37,25 +37,24 @@ int coin_change(vector<int>& coins, int amt)
       }
       cout << endl;
    }*/
-   return dp[coins.size()-1][amt];
+   return dp[coins.size() - 1][amt];
 }
-    
-    
+
 int32_t main()
 {
-   int amt=0,n;
-   
-   cin >> n >> amt; 
-   vector<int> coins(n,0);
-   
-   for(int i=0;i<n;i++)
+   int amt = 0, n;
+
+   cin >> n >> amt;
+   vector<int> coins(n, 0);
+
+   for (int i = 0; i < n; i++)
    {
-     cin >> coins[i];
+      cin >> coins[i];
    }
-   
-   int ans=coin_change(coins,amt);
+
+   int ans = coin_change(coins, amt);
    cout << "Minimum coins = " << ans << endl;
-   
+
    return 0;
 }
 

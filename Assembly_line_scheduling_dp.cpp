@@ -27,9 +27,9 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define ASSEMBLY_LINES  2
+#define ASSEMBLY_LINES 2
 
-int assemblyLineScheduling(int nodes, vector<vector<int> > &line, int inTime[], int outTime[], vector<vector<int> > &tTime, int path[])
+int assemblyLineScheduling(int nodes, vector<vector<int>> &line, int inTime[], int outTime[], vector<vector<int>> &tTime, int path[])
 {
     // line    -> containing assembly line with its node values
     // tTime   -> containing lists of Extra cost incurred to change the assembly line
@@ -39,7 +39,7 @@ int assemblyLineScheduling(int nodes, vector<vector<int> > &line, int inTime[], 
     int line1[nodes + 2], line2[nodes + 2];
     // line1 and line2 for storing the calculated cost at each node
 
-    // Adding in_time 
+    // Adding in_time
     line1[0] = inTime[0];
     line2[0] = inTime[1];
 
@@ -52,13 +52,13 @@ int assemblyLineScheduling(int nodes, vector<vector<int> > &line, int inTime[], 
         // tempS -> node selected on same line
         // tempC -> node selected on different line
         // temp  -> minimum of tempS and tempC
-        //int tempS, tempC, temp;	
+        //int tempS, tempC, temp;
 
         // for Line_1
-        line1[node + 1] = min(line1[node] + line[0][node] , line2[node] + line[0][node] + tTime[1][node] );
+        line1[node + 1] = min(line1[node] + line[0][node], line2[node] + line[0][node] + tTime[1][node]);
 
         // for Line_2
-        line2[node + 1] = min(line2[node] + line[1][node] , line1[node] + line[1][node] + tTime[0][node] );
+        line2[node + 1] = min(line2[node] + line[1][node], line1[node] + line[1][node] + tTime[0][node]);
     }
 
     // Adding Out time for respective line
@@ -66,10 +66,10 @@ int assemblyLineScheduling(int nodes, vector<vector<int> > &line, int inTime[], 
     line2[nodes + 1] = line2[nodes] + outTime[1];
 
     int minLine = min(line1[nodes + 1], line2[nodes + 1]);
-    
+
     int pathC = 0, val = 0;
 
-    // Finding minimum cost 
+    // Finding minimum cost
     if (minLine == line1[nodes + 1])
     {
         pathC = 0;
@@ -83,7 +83,7 @@ int assemblyLineScheduling(int nodes, vector<vector<int> > &line, int inTime[], 
         val = line2[nodes + 1];
     }
 
-    // Path traversed 
+    // Path traversed
     for (int node = nodes; node >= 0; node--)
     {
         if (node == 0)
@@ -108,7 +108,7 @@ int assemblyLineScheduling(int nodes, vector<vector<int> > &line, int inTime[], 
                 {
                     pathC = 1;
                 }
-            }            
+            }
         }
     }
     return val;
@@ -142,13 +142,13 @@ int main()
     cin >> nodes;
 
     int inTime[ASSEMBLY_LINES], outTime[ASSEMBLY_LINES], path[nodes + 2];
-    vector<vector<int> > line;
-    vector<vector<int> > tTime;
+    vector<vector<int>> line;
+    vector<vector<int>> tTime;
 
     cout << "\n-- In Time --\n";
     for (int i = 0; i < ASSEMBLY_LINES; i++)
     {
-        cout << "For Line " << i + 1 << " : " ;
+        cout << "For Line " << i + 1 << " : ";
         cin >> inTime[i];
     }
 
@@ -213,7 +213,7 @@ int main()
     {
         if (node == 0)
         {
-            cout << "Path : In" << (path[node] + 1) << "(" << inTime[path[node]] << ") --> ";	
+            cout << "Path : In" << (path[node] + 1) << "(" << inTime[path[node]] << ") --> ";
         }
         else if (node == nodes + 1)
         {
@@ -221,7 +221,7 @@ int main()
         }
         else
         {
-            cout<< "Node" << (path[node] + 1) << "(" << line[path[node]][node - 1] << ") --> ";
+            cout << "Node" << (path[node] + 1) << "(" << line[path[node]][node - 1] << ") --> ";
         }
     }
     return 0;
@@ -252,4 +252,4 @@ int main()
         Node2(70) to Node1(60) : 30
         Minimum Time : 200
         Path : In2(10) --> Node2(50) --> Node1(40) --> Node1(60) --> Out1(30)
-*/ 
+*/

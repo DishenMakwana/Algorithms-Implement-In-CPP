@@ -1,13 +1,16 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define IOS ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define IOS                           \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 
 #define NODE 1000
-typedef pair<int,int> Pair;
+typedef pair<int, int> Pair;
 
-vector<int>adjacent[NODE];
-vector<Pair>bridges;
-set<int>points;
+vector<int> adjacent[NODE];
+vector<Pair> bridges;
+set<int> points;
 int parent[NODE] = {-1};
 int discTime[NODE] = {0};
 int low[NODE] = {0};
@@ -20,20 +23,20 @@ void articulation(int node)
     visit[node] = true;
 
     /* increase the timer and update the discover and lower time for this node*/
-    counter ++;
+    counter++;
     discTime[node] = counter;
     low[node] = counter;
 
     /* this will count the child number of the node */
     int child = 0;
 
-    for(int i=0; i<adjacent[node].size(); i++)
+    for (int i = 0; i < adjacent[node].size(); i++)
     {
         /* access all the adjacent of the node */
         int thisnode = adjacent[node][i];
 
         /* checking whether this node is already visited or not */
-        if(! visit[thisnode])
+        if (!visit[thisnode])
         {
             /* increase the child number of the node */
             child++;
@@ -42,36 +45,35 @@ void articulation(int node)
             parent[thisnode] = node;
             articulation(thisnode);
 
-
             /* condition for articulation path */
-            if(low[thisnode] > discTime[node])
+            if (low[thisnode] > discTime[node])
             {
-                bridges.push_back(make_pair(node,thisnode));
+                bridges.push_back(make_pair(node, thisnode));
             }
 
             /* condition for articulation node */
-            if(parent[node] == -1 && child > 1)
+            if (parent[node] == -1 && child > 1)
             {
                 points.insert(node);
             }
-            else if(parent[node] != -1 && low[thisnode] >= discTime[node])
+            else if (parent[node] != -1 && low[thisnode] >= discTime[node])
             {
                 points.insert(node);
             }
 
             /* update the lowest time to reach the node */
-            low[node] = min(low[node],low[thisnode]);
+            low[node] = min(low[node], low[thisnode]);
         }
         /* update the lowest time with this condition :: for visited adjacent*/
-        else if(thisnode != parent[node])
-            low[node] = min(low[node],discTime[thisnode]);
+        else if (thisnode != parent[node])
+            low[node] = min(low[node], discTime[thisnode]);
     }
 }
 
 void display_nodes()
 {
     cout << "Articulation Point : ";
-    for(auto i : points)
+    for (auto i : points)
         cout << i << " ";
     cout << endl;
 }
@@ -79,19 +81,20 @@ void display_nodes()
 void display_bridges()
 {
     cout << "Articulation Bridges : " << endl;
-    for(int i=0; i<bridges.size(); i++)
+    for (int i = 0; i < bridges.size(); i++)
         cout << "\t" << bridges[i].first << " --- " << bridges[i].second << endl;
 }
 
 int32_t main()
 {
     IOS;
-    int nodes,edges;
+    int nodes, edges;
     cin >> nodes >> edges;
 
-    for(int i=0; i<edges; i++)
+    for (int i = 0; i < edges; i++)
     {
-        int node1; int node2;
+        int node1;
+        int node2;
         cin >> node1 >> node2;
 
         adjacent[node1].push_back(node2);

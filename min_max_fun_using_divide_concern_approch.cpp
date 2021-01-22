@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void find_min_max(int arr[], int l, int h, int& min, int& max)
+void find_min_max(int arr[], int l, int h, int &min, int &max)
 {
   if (l == h)
   {
@@ -13,7 +13,7 @@ void find_min_max(int arr[], int l, int h, int& min, int& max)
 
     return;
   }
-  
+
   if (h - l == 1)
   {
     if (arr[l] < arr[h])
@@ -34,7 +34,7 @@ void find_min_max(int arr[], int l, int h, int& min, int& max)
     }
     return;
   }
-  
+
   int m = (l + h) / 2;
 
   find_min_max(arr, l, m, min, max);
@@ -44,24 +44,19 @@ void find_min_max(int arr[], int l, int h, int& min, int& max)
 int main()
 {
   int n;
-  cin >> n; 
-  int arr[n]; 
-  for(int i=0;i<n;i++)
+  cin >> n;
+  int arr[n];
+  for (int i = 0; i < n; i++)
   {
-     cin >> arr[i];
+    cin >> arr[i];
   }
   int max = INT_MIN, min = INT_MAX;
 
   find_min_max(arr, 0, n - 1, min, max);
-  
+
   cout << "max = " << max << "\nmin = " << min << endl;
   return 0;
 }
-
-
-
-
-
 
 /*#include<bits/stdc++.h> 
 using namespace std; 
